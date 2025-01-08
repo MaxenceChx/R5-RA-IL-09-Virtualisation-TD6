@@ -1,6 +1,6 @@
 services:
   db:
-    image: mysql:latest
+    image: mysql:8.0.30-alpine
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: my_db
@@ -15,7 +15,9 @@ services:
       timeout: 3s
       retries: 2
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "5050:5000"
     environment:
@@ -32,7 +34,9 @@ services:
       - /app/node_modules
     command: npm start
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
